@@ -1,24 +1,26 @@
 package sc.com.movie.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
+import java.util.List;
+
+import retrofit2.Call;
 import sc.com.movie.R;
+import sc.com.movie.model.Movie;
+import sc.com.movie.service.MoviesServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +39,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private static final String API_KEY = "43a7ea280d085bd0376e108680615c7f";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final MoviesServiceImpl moviesService = new MoviesServiceImpl();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                TextView textView = (TextView) findViewById(R.id.section_label);
+                Call<List<Movie>> movies = moviesService.getMovies(API_KEY);
+                textView.setText(movies.toString());
             }
         });
 
