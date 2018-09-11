@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import sc.com.movie.model.Movie;
 
 public class MoviesServiceImpl {
@@ -14,6 +15,7 @@ public class MoviesServiceImpl {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         MovieService movieService = retrofit.create(MovieService.class);
@@ -25,6 +27,7 @@ public class MoviesServiceImpl {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         MovieService movieService = retrofit.create(MovieService.class);
